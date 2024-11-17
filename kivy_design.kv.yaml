@@ -1,0 +1,87 @@
+ScreenManager:
+    LoginScreen:
+        name: "login"
+    UserHomeScreen:
+        name: "home"
+    RestaurantScreen:
+        name: "restaurant"
+    RestaurantSideScreen:
+        name: "admin"
+
+<LoginScreen>:
+    MDLabel:
+        text: "V-Eats"
+        halign: "center"
+        font_style: "H4"
+        pos_hint: {"center_y": 0.8}
+    MDRaisedButton:
+        text: "Login as User"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        on_press: app.root.current = "home"
+    MDRaisedButton:
+        text: "Login as Restaurant"
+        pos_hint: {"center_x": 0.5, "center_y": 0.4}
+        on_press: app.root.current = "admin"
+
+<UserHomeScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "Select a Restaurant"
+            halign: "center"
+            font_style: "H5"
+            size_hint_y: None
+            height: dp(40)
+        ScrollView:
+            MDList:
+                id: restaurant_list
+        MDRaisedButton:
+            text: "Back"
+            pos_hint: {"center_x": 0.5}
+            on_press: app.root.current = "login"
+        MDRaisedButton:
+            text: "Refresh"
+            pos_hint: {"center_x": 0.5}
+            on_press: root.display_restaurants()
+
+<RestaurantScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            id: restaurant_name
+            text: ""
+            halign: "center"
+            font_style: "H5"
+            size_hint_y: None
+            height: dp(40)
+        ScrollView:
+            MDList:
+                id: menu_list
+        MDRaisedButton:
+            text: "Back"
+            pos_hint: {"center_x": 0.5}
+            on_press: app.root.current = "home"
+
+<RestaurantSideScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "Orders Received"
+            halign: "center"
+            font_style: "H5"
+            size_hint_y: None
+            height: dp(40)
+        ScrollView:
+            MDList:
+                id: order_list
+        MDRaisedButton:
+            text: "Refresh Orders"
+            pos_hint: {"center_x": 0.5}
+            on_press: root.display_orders()
+
+<QuantityInputDialog>:
+    MDTextField:
+        id: quantity_input
+        hint_text: "Enter Quantity"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        size_hint_x: 0.8

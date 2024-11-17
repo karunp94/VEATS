@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VEATS - Home</title>
+</head>
+<body>
+    <h1>Welcome to VEATS</h1>
+    <h3>Select a Stall:</h3>
+    <ul>
+        {% for stall_name in stalls.keys() %}
+        <li><a href="{{ url_for('menu', stall_name=stall_name) }}">{{ stall_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

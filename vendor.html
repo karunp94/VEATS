@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VEATS - Vendor Dashboard</title>
+</head>
+<body>
+    <h1>Vendor Dashboard</h1>
+    
+    <h2>Manage Orders</h2>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+            <li>
+                <strong>Order {{ loop.index }}:</strong>
+                <ul>
+                    {% for stall, items in order.items() %}
+                    <li>{{ stall }}:
+                        <ul>
+                            {% for item, qty in items.items() %}
+                            <li>{{ qty }}x {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <form action="{{ url_for('accept_order') }}" method="post">
+                    <input type="hidden" name="order_index" value="{{ loop.index0 }}">
+                    <button type="submit">Accept Order</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No orders to process!</p>
+    {% endif %}
+
+    <h2>Manage Menu</h2>
+    <ul>
+        {% for stall_name, items in stalls.items() %}
+        <li><strong>{{ stall_name }}</strong></li>
+        <ul>
+            {% for item_name, item_data in items.items() %}
+            <li>
+                {{ item_name }} - ${{ item_data.price }}
+                {% if item_data.stock %}
+                    (In Stock)
+                    <form action="{{ url_for('remove_item') }}" method="post" style="display:inline;">
+                        <input type="hidden" name="stall_name" value="{{ stall_name }}">
+                        <input type="hidden" name="item_name" value="{{ item_name }}">
+                        <button type="submit">Mark as Out of Stock</button>
+                    </form>
+                {% else %}
+                    (Out of Stock)
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('home') }}">Back to Customer Side</a>
+</body>
+</html>

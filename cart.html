@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VEATS - Cart</title>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <ul>
+        {% for stall, items in cart.items() %}
+        <li><strong>{{ stall }}</strong></li>
+        <ul>
+            {% for item, qty in items.items() %}
+            <li>{{ qty }}x {{ item }} - ${{ stalls[stall][item] }} each</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+    <h3>Total: ${{ total }}</h3>
+    <form action="{{ url_for('checkout') }}" method="post">
+        <button type="submit">Checkout</button>
+    </form>
+    <a href="{{ url_for('home') }}">Continue Shopping</a>
+</body>
+</html>
